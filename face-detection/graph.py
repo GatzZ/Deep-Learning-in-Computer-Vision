@@ -50,15 +50,18 @@ def show_bboxes(bboxes, ax, color="black", text=None):
         if text is not None:
             ax.text(bbox[1], bbox[0], text[i], color=color)
         
-def visualize_bboxes(images, pred_bboxes=None, true_bboxes=None, decision_function=None, n_cols=5, n_rows=1):
+def visualize_bboxes(images, pred_bboxes=None, true_bboxes=None, decision_function=None, n_cols=5, n_rows=1, image_idx_ls=None):
     plt.figure(figsize = (3*n_cols,3*n_rows))
     
     if pred_bboxes is not None:
         pred_bboxes = np.array(pred_bboxes, dtype=np.int32)
     if true_bboxes is not None:
         true_bboxes = np.array(true_bboxes, dtype=np.int32)
-
-    for n,i in enumerate(np.random.choice(range(len(images)), size=n_cols * n_rows, replace=False)):
+    
+    if not image_idx_ls:
+        image_idx_ls = np.random.choice(range(len(images)), size=n_cols * n_rows, replace=False) 
+    
+    for n,i in enumerate(image_idx_ls):
         ax = plt.subplot(n_rows,n_cols,n+1)
         plt.axis('off')
         plt.imshow(images[i])
