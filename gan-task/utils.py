@@ -6,6 +6,7 @@ import math
 import random
 import scipy.misc
 import numpy as np
+from skimage.transform import resize
 
 def get_image(image_path, image_size, is_crop=True):
     return transform(imread(image_path), image_size, is_crop)
@@ -33,7 +34,7 @@ def imsave(images, size, path):
     return scipy.misc.imsave(path, (255*img).astype(np.uint8))
 
 def transform(image, npx=64, is_crop=True):
-    return np.array(image)/127.5 - 1.
+    return resize(np.array(image)/127.5 - 1., [64, 64], preserve_range=True)
 
 def inverse_transform(images):
     return (images+1.)/2.
